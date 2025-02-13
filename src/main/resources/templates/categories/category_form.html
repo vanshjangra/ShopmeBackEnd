@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: page_head(${pageTitle})"/>
+<head th:replace="fragments :: page_head(${pageTitle}, 'none')"/>
 
 <body>
 <div class="container-fluid">
@@ -81,38 +81,40 @@
 </div>
 
 <script type="text/javascript">
-    moduleURL = "[[@{/categories}]]";
+    MAX_FILE_SIZE = 102400;
 
-    function checkUnique(form){
-        catId = $("#id").val();
-        catName = $("#name").val();
-        catAlias = $("#alias").val();
+moduleURL = "[[@{/categories}]]";
 
-        csrfValue = $("input[name='_csrf']").val();
+function checkUnique(form){
+    catId = $("#id").val();
+    catName = $("#name").val();
+    catAlias = $("#alias").val();
 
-        url = "[[@{/categories/check_unique}]]";
+    csrfValue = $("input[name='_csrf']").val();
 
-        params = {id: catId, name: catName, alias: catAlias, _csrf: csrfValue};
+    url = "[[@{/categories/check_unique}]]";
 
-        $.post(url, params, function(response){
-            if(response == "Ok"){
-                form.submit();
-            }
-            else if(response == "DuplicateName"){
-                showWarningModal("There is another category having same name " + catName);
-            }
-            else if(response == "DuplicateAlias"){
-                showWarningModal("There is another category having same alias " + catAlias);
-            }
-            else{
-                showErrorModal("Unknown response from server")
-            }
-        }).fail(function(){
-            showErrorModal("Could not connect to the server")
-        });
+    params = {id: catId, name: catName, alias: catAlias, _csrf: csrfValue};
 
-        return false;
-    }
+    $.post(url, params, function(response){
+        if(response == "Ok"){
+            form.submit();
+        }
+        else if(response == "DuplicateName"){
+            showWarningModal("There is another category having same name " + catName);
+        }
+        else if(response == "DuplicateAlias"){
+            showWarningModal("There is another category having same alias " + catAlias);
+        }
+        else{
+            showErrorModal("Unknown response from server")
+        }
+    }).fail(function(){
+        showErrorModal("Could not connect to the server")
+    });
+
+    return false;
+}
 </script>
 
 <script th:src="@{/js/common_form.js}"></script>
