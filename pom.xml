@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>Shopme</artifactId>
+	<artifactId>ShopmeBackEnd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Shopme</name>
+	<name>ShopmeBackEnd</name>
 	<description>E-Commerce Project</description>
 	<url/>
 	<licenses>
