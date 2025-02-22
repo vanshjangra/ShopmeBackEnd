@@ -1,4 +1,4 @@
-package com.shopme.entity;
+package com.shopme.util;
 
 public class CategoryPageInfo {
     private int totalPages;

@@ -9,6 +9,7 @@ import com.shopme.service.BrandService;
 import com.shopme.service.CategoryService;
 import com.shopme.service.ProductService;
 import com.shopme.util.FileUploadUtil;
+import com.shopme.util.ProductSaveHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;

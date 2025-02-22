@@ -1,7 +1,7 @@
 package com.shopme.controller;
 
 import com.shopme.entity.Category;
-import com.shopme.entity.CategoryPageInfo;
+import com.shopme.util.CategoryPageInfo;
 import com.shopme.exception.CategoryNotFoundException;
 import com.shopme.exporter.CategoryCsvExporter;
 import com.shopme.service.CategoryService;

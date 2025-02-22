@@ -2,7 +2,7 @@ package com.shopme.service;
 
 import com.shopme.dao.CategoryRepository;
 import com.shopme.entity.Category;
-import com.shopme.entity.CategoryPageInfo;
+import com.shopme.util.CategoryPageInfo;
 import com.shopme.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

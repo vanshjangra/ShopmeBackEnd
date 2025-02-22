@@ -1,8 +1,7 @@
-package com.shopme.controller;
+package com.shopme.util;
 
 import com.shopme.entity.Product;
 import com.shopme.entity.ProductImage;
-import com.shopme.util.FileUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -18,7 +17,7 @@ import java.util.Set;
 public class ProductSaveHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductSaveHelper.class);
 
-     static void deleteExtraImagesWereRemovedOnForm(Product product) {
+     public static void deleteExtraImagesWereRemovedOnForm(Product product) {
         String extraImageDir = "product-images/" + product.getId() + "/extras";
         Path dirPath = Paths.get(extraImageDir);
 
@@ -40,7 +39,7 @@ public class ProductSaveHelper {
         }
     }
 
-     static void setExistingExtraImageNames(String[] imageIDs, String[] imageNames, Product product) {
+    public static void setExistingExtraImageNames(String[] imageIDs, String[] imageNames, Product product) {
         if (imageIDs == null || imageIDs.length == 0) return;
 
         Set<ProductImage> images = new HashSet<>();
@@ -55,7 +54,7 @@ public class ProductSaveHelper {
         product.setImages(images);
     }
 
-     static void setProductDetails(String[] detailIDs, String[] detailNames,
+     public static void setProductDetails(String[] detailIDs, String[] detailNames,
                                          String[] detailValues, Product product) {
         if (detailNames == null || detailNames.length == 0) return;
 
@@ -71,7 +70,7 @@ public class ProductSaveHelper {
         }
     }
 
-     static void saveUploadedImages(MultipartFile mainImageMultipart,
+     public static void saveUploadedImages(MultipartFile mainImageMultipart,
                                           MultipartFile[] extraImageMultiParts, Product savedProduct) throws IOException {
         if (!mainImageMultipart.isEmpty()) {
             String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
@@ -93,7 +92,7 @@ public class ProductSaveHelper {
         }
     }
 
-     static void setNewExtraImageNames(MultipartFile[] extraImageMultiParts, Product product) {
+     public static void setNewExtraImageNames(MultipartFile[] extraImageMultiParts, Product product) {
         if (extraImageMultiParts.length > 0) {
             for (MultipartFile multipartFile : extraImageMultiParts) {
                 if (!multipartFile.isEmpty()) {
@@ -107,7 +106,7 @@ public class ProductSaveHelper {
         }
     }
 
-    static void setMainImageName(MultipartFile mainImageMultipart, Product product) {
+    public static void setMainImageName(MultipartFile mainImageMultipart, Product product) {
         if (!mainImageMultipart.isEmpty()) {
             String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
             product.setMainImage(fileName);
