@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BrandRepository extends PagingAndSortingRepository<Brand, Integer> {
+public interface BrandRepository extends SearchRepository<Brand, Integer> {
     public Long countById(Integer id);
     public Brand findByName(String name);
 

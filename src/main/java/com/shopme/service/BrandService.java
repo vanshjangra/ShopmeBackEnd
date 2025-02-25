@@ -3,6 +3,7 @@ package com.shopme.service;
 import com.shopme.dao.BrandRepository;
 import com.shopme.entity.Brand;
 import com.shopme.exception.BrandNotFoundException;
+import com.shopme.util.PagingAndSortingHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,18 +25,8 @@ public class BrandService {
         return (List<Brand>) repo.findAll();
     }
 
-    public Page<Brand> listByPage(int pageNum, String sortField, String sortDir, String keyword){
-        Sort sort = Sort.by(sortField);
-
-        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-
-        Pageable pageable = PageRequest.of(pageNum - 1, BRANDS_PER_PAGE, sort);
-
-        if (keyword != null){
-            return repo.findAll(keyword, pageable);
-        }
-
-        return repo.findAll(pageable);
+    public void listByPage(int pageNum, PagingAndSortingHelper helper){
+        helper.listEntities(pageNum, BRANDS_PER_PAGE, repo);
     }
 
     public Brand save(Brand brand) {

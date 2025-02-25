@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: page_head('Categories - Shopme Admin', 'none')"/>
-
 <body>
 <div class="container-fluid">
-
-    <div th:replace="navigation :: menu"/>
-
+    <div th:replace="navigation :: menu"></div>
     <div>
         <h2>Manage Categories</h2>
+
         <a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
         <a th:href="@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+
     </div>
 
-    <div th:replace="fragments :: search_form_and_message('/categories/page/1')"/>
+    <div th:replace="fragments :: search_form_and_message"/>
 
     <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -22,14 +20,13 @@
             <tr>
                 <th>ID</th>
                 <th>Category Image</th>
-                <th th:replace="fragments :: column_link('/categories', 'name', 'Category Name', 'none')"/>
+                <th th:replace="fragments :: column_link('name', 'Category Name', 'none')"/>
                 <th class="hideable-column">Alias</th>
                 <th>Enabled</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-
             <tr th:each="cat : ${listCategories}">
                 <td>[[${cat.id}]]</td>
                 <td>
@@ -71,26 +68,28 @@
 
     <div th:if="${keyword != null}" class="text-center">
         <span>Search result does not show categories in hierarchical form</span>
-        <div th:replace="fragments :: pagination('/categories', 'categories')"/>
+        <div th:replace="fragments :: pagination('categories')"></div>
     </div>
 
     <th:block th:unless="${keyword != null}">
-        <div th:replace="fragments :: pagination('/categories', 'top-level categories')"/>
+        <div th:replace="fragments :: pagination('top-level categories')"></div>
 </div>
+
 <div th:replace="modal_fragments :: confirm_modal"/>
 
-<div th:replace="fragments :: footer"/>
+<div th:replace="fragments :: footer"></div>
+
+</div>
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
     moduleURL = "[[@{/categories}]]";
 
-    $(document).ready(function(){
-        $(".link-delete").on("click", function(e){
+    $(document).ready(function() {
+        $(".link-delete").on("click", function(e) {
             e.preventDefault();
             showDeleteConfirmModal($(this), 'category');
         });
     });
 </script>
-
 </body>
 </html>

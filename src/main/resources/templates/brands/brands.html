@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: page_head('Brands - Shopme Admin', 'none')"/>
-
 <body>
 <div class="container-fluid">
-
-    <div th:replace="navigation :: menu"/>
-
+    <div th:replace="navigation :: menu"></div>
     <div>
         <h2>Manage Brands</h2>
+
         <a th:href="@{/brands/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
         <a th:href="@{/brands/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
     </div>
 
-    <div th:replace="fragments :: search_form_and_message('/brands/page/1')"/>
+    <div th:replace="fragments :: search_form_and_message"/>
 
     <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -22,13 +19,12 @@
             <tr>
                 <th class="hideable-column">Brand ID</th>
                 <th>Logo</th>
-                <th th:replace="fragments :: column_link('/brands', 'name', 'Brand Name', 'none')"/>
+                <th th:replace="fragments :: column_link('name', 'Brand Name', 'none')"/>
                 <th>Categories</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-
             <tr th:each="brand : ${listBrands}">
                 <td class="hideable-column">[[${brand.id}]]</td>
                 <td>
@@ -68,24 +64,23 @@
         </div>
     </div>
 
-    <div th:replace="fragments :: pagination('/brands', 'brands')"></div>
+    <div th:replace="fragments :: pagination('brands')"></div>
 
     <div th:replace="modal_fragments :: confirm_modal"/>
 
-    <div th:replace="fragments :: footer"/>
+    <div th:replace="fragments :: footer"></div>
 
 </div>
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
     moduleURL = "[[@{/brands}]]";
 
-    $(document).ready(function(){
-        $(".link-delete").on("click", function(e){
+    $(document).ready(function() {
+        $(".link-delete").on("click", function(e) {
             e.preventDefault();
             showDeleteConfirmModal($(this), 'brand');
         });
     });
 </script>
-
 </body>
 </html>

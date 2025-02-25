@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: page_head('Products - Shopme Admin', 'none')"/>
-
 <body>
 <div class="container-fluid">
-
-    <div th:replace="navigation :: menu"/>
-
+    <div th:replace="navigation :: menu"></div>
     <div>
         <h2>Manage Products</h2>
 
@@ -16,6 +12,7 @@
             <a th:href="@{/products/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
             <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
         </th:block>
+
     </div>
 
     <div>
@@ -54,18 +51,18 @@
             <thead class="thead-dark">
             <tr>
                 <th class="hideable-column">
-                <th th:replace="fragments :: column_link('/products', 'id', 'ID', 'tag')"/>
+                <th th:replace="fragments :: column_link('id', 'ID', 'tag')"/>
                 </th>
 
                 <th>Main Image</th>
-                <th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"/>
+                <th th:replace="fragments :: column_link('name', 'Product Name', 'none')"/>
 
                 <th class="hideable-column">
-                <th th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'tag')"/>
+                <th th:replace="fragments :: column_link('brand', 'Brand', 'tag')"/>
                 </th>
 
                 <th class="hideable-column">
-                <th th:replace="fragments :: column_link('/products', 'category', 'Category', 'tag')"/>
+                <th th:replace="fragments :: column_link('category', 'Category', 'tag')"/>
                 </th>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
@@ -76,7 +73,6 @@
             </tr>
             </thead>
             <tbody>
-
             <tr th:each="product : ${listProducts}">
                 <td class="hideable-column">[[${product.id}]]</td>
                 <td>
@@ -85,10 +81,10 @@
                 <td>
                     <a class="link-detail"
                        th:href="@{'/products/detail/' + ${product.id}}"
-                       th:title="${product.name}">
-                        [[${product.shortName}]]</a>
-                </td>
+                       th:title="${product.name}"
+                    >[[${product.shortName}]]</a>
 
+                </td>
                 <td class="hideable-column">[[${product.brand.name}]]</td>
                 <td class="hideable-column">[[${product.category.name}]]</td>
 
@@ -101,7 +97,8 @@
                 <td>
                     <a class="fas fa-file-alt fa-2x icon-green link-detail"
                        th:href="@{'/products/detail/' + ${product.id}}"
-                       title="View details of this product"></a>
+                       title="View details of this product"
+                    ></a>
 
                     <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Salesperson')">
                         &nbsp;
@@ -121,8 +118,7 @@
     <div class="less-details">
         <div th:each="product : ${listProducts}" class="row m-1">
             <div class="col-4">
-                <img th:src="@{${product.mainImagePath}}" style="width: 80px"
-                     class="img-fluid"/>
+                <img th:src="@{${product.mainImagePath}}" style="width: 80px" class="img-fluid"/>
             </div>
             <div class="col-8">
                 <div>
@@ -130,7 +126,8 @@
                 </div>
                 <div class="mt-2">
                     <a class="fas fa-file-alt fa-2x icon-green link-detail"
-                       th:href="@{'/products/detail/' + ${product.id}}"></a>
+                       th:href="@{'/products/detail/' + ${product.id}}"
+                    ></a>
 
                     <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Salesperson')">
                         &nbsp;
@@ -152,37 +149,36 @@
     <div class="modal fade" id="detailModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-
             </div>
         </div>
     </div>
 
-    <div th:replace="fragments :: pagination('/products', 'products')"></div>
+    <div th:replace="fragments :: pagination('products')"></div>
 
-    <div th:replace="fragments :: footer"/>
+    <div th:replace="fragments :: footer"></div>
 
 </div>
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
     moduleURL = "[[@{/products}]]";
 
-    $(document).ready(function(){
-        $(".link-delete").on("click", function(e){
+    $(document).ready(function() {
+        $(".link-delete").on("click", function(e) {
             e.preventDefault();
             showDeleteConfirmModal($(this), 'product');
         });
 
-        $(".link-detail").on("click", function(e){
+        $(".link-detail").on("click", function(e) {
             e.preventDefault();
             linkDetailURL = $(this).attr("href");
             $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
         });
 
-        $("#dropdownCategory").on("change", function(){
+        $("#dropdownCategory").on("change", function() {
             $("#searchForm").submit();
         });
+
     });
 </script>
-
 </body>
 </html>
