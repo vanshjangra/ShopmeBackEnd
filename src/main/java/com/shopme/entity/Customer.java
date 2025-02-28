@@ -1,5 +1,7 @@
 package com.shopme.entity;
 
+import com.shopme.constant.AuthenticationType;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -51,6 +53,13 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authentication_type", length = 10)
+    private AuthenticationType authenticationType;
+
+    @Column(name = "reset_password_token", length = 38)
+    private String resetPasswordToken;
 
     public Customer(){
 
@@ -174,6 +183,22 @@ public class Customer {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public AuthenticationType getAuthenticationType() {
+        return authenticationType;
+    }
+
+    public void setAuthenticationType(AuthenticationType authenticationType) {
+        this.authenticationType = authenticationType;
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 
     @Override
