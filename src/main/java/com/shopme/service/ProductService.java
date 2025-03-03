@@ -89,7 +89,7 @@ public class ProductService {
             }
         }
 
-        return "OK";
+        return "Ok";
     }
 
     public void updateProductEnabledStatus(Integer id, boolean enabled) {
