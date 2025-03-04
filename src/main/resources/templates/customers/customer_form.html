@@ -11,8 +11,7 @@
 
     <form th:action="@{/customers/save}" th:object="${customer}" method="post"
           style="max-width: 600px; margin:  0 auto;"
-          onsubmit="return checkEmailUnique(this);"
-    >
+          onsubmit="return checkEmailUnique(this);">
         <input type="hidden" th:field="*{id}"/>
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
@@ -116,41 +115,8 @@
     <div th:replace="fragments :: footer"></div>
 </div>
 <script type="text/javascript">
-    var dropdownCountries;
-    var dropdownStates;
-
-    $(document).ready(function() {
-        dropdownCountries = $("#country");
-        dropdownStates = $("#listStates");
-
-        dropdownCountries.on("change", function() {
-            loadStates4Country();
-            $("#state").val("").focus();
-        });
-
-        loadStates4Country();
-
-        $('#buttonCancel').click(function() {
-            window.location = "[[@{/customers}]]";
-        });
-    });
-
-    function loadStates4Country() {
-        selectedCountry = $("#country option:selected");
-        countryId = selectedCountry.val();
-
-        url = "[[@{/states/list_by_country/}]]" + countryId;
-
-        $.get(url, function(responseJson) {
-            dropdownStates.empty();
-
-            $.each(responseJson, function(index, state) {
-                $("<option>").val(state.name).text(state.name).appendTo(dropdownStates);
-            });
-        }).fail(function() {
-            showErrorModal("Error loading states/provinces for the selected country.");
-        })
-    }
+    contextPath = "[[@{/}]]";
+    moduleURL = "[[@{/customers}]]";
 
     function checkEmailUnique(form) {
         customerId = $("#id").val();
@@ -161,7 +127,7 @@
         params = {id : customerId, email: customerEmail, _csrf: csrfValue};
 
         $.post(url, params, function(response) {
-            if (response == "Ok") {
+            if (response == "OK") {
                 form.submit();
             } else if (response == "Duplicated") {
                 showWarningModal("There is another customer having the email " + customerEmail);
@@ -176,5 +142,6 @@
     }
 </script>
 <script th:src="@{/js/common_form.js}"></script>
+<script th:src="@{/js/common_form_country_state.js}"></script>
 </body>
 </html>
