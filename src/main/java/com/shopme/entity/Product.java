@@ -5,11 +5,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+public class Product extends IdBasedEntity{
     @Column(unique = true, length = 256, nullable = false)
     private String name;
 
@@ -67,14 +63,6 @@ public class Product {
     }
 
     public Product(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
         this.id = id;
     }
 
