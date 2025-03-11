@@ -14,6 +14,9 @@ public class CartItem extends IdBasedEntity{
     private Product product;
     private int quantity;
 
+    @Transient
+    private float shippingCost;
+
     public CartItem(){
 
     }
@@ -40,6 +43,15 @@ public class CartItem extends IdBasedEntity{
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Transient
+    public float getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(float shippingCost) {
+        this.shippingCost = shippingCost;
     }
 
     @Override
