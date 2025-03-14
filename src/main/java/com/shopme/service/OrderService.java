@@ -1,6 +1,8 @@
 package com.shopme.service;
 
+import com.shopme.dao.CountryRepository;
 import com.shopme.dao.OrderRepository;
+import com.shopme.entity.Country;
 import com.shopme.entity.Order;
 import com.shopme.exception.OrderNotFoundException;
 import com.shopme.util.PagingAndSortingHelper;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,7 +21,10 @@ public class OrderService {
     private static final int ORDERS_PER_PAGE = 10;
 
     @Autowired
-    private OrderRepository repo;
+    private OrderRepository orderRepo;
+
+    @Autowired
+    private CountryRepository countryRepo;
 
     public void listByPage(int pageNum, PagingAndSortingHelper helper) {
         String sortField = helper.getSortField();
@@ -40,10 +46,10 @@ public class OrderService {
         Page<Order> page = null;
 
         if (keyword != null) {
-            page = repo.findAll(keyword, pageable);
+            page = orderRepo.findAll(keyword, pageable);
         }
         else {
-            page = repo.findAll(pageable);
+            page = orderRepo.findAll(pageable);
         }
 
         helper.updateModelAttributes(pageNum, page);
@@ -51,7 +57,7 @@ public class OrderService {
 
     public Order get(Integer id) throws OrderNotFoundException {
         try {
-            return repo.findById(id).get();
+            return orderRepo.findById(id).get();
         }
         catch (NoSuchElementException ex){
             throw new OrderNotFoundException("Could not find any orders with ID " + id);
@@ -59,11 +65,23 @@ public class OrderService {
     }
 
     public void delete(Integer id) throws OrderNotFoundException{
-        Long count = repo.countById(id);
+        Long count = orderRepo.countById(id);
         if (count == null || count == 0){
             throw new OrderNotFoundException("Could not find any orders with ID " + id);
         }
 
-        repo.deleteById(id);
+        orderRepo.deleteById(id);
+    }
+
+    public List<Country> listAllCountries(){
+        return countryRepo.findAllByOrderByNameAsc();
+    }
+
+    public void save(Order orderInForm){
+        Order orderInDB = orderRepo.findById(orderInForm.getId()).get();
+        orderInForm.setOrderTime(orderInDB.getOrderTime());
+        orderInForm.setCustomer(orderInDB.getCustomer());
+
+        orderRepo.save(orderInForm);
     }
 }
